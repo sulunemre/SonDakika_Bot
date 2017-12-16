@@ -52,7 +52,7 @@ public class SonDakikaBot extends TelegramLongPollingBot
         try
         {
             //Get apiKey from a non-public file
-            fileIn = new Scanner(new File("..\\apiKey.txt"));
+            fileIn = new Scanner(new File("../apiKey.txt"));
 
         } catch (FileNotFoundException ex)
         {
