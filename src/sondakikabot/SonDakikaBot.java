@@ -19,6 +19,7 @@ import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
+import xmlParsers.GoogleGundemParser;
 import xmlParsers.MilliyetSonDakikaParser;
 import xmlParsers.News;
 
@@ -74,7 +75,10 @@ public class SonDakikaBot extends TelegramLongPollingBot
             Message message = update.getMessage();
             if(message.hasText())
             {
-                if(message.getText().equals("/sondakika"))
+                String messageText = message.getText();
+                String messageTextLowerText = messageText.toLowerCase();
+                
+                if(messageText.equals("/sondakika"))
                 {
                     try
                     {
@@ -97,6 +101,31 @@ public class SonDakikaBot extends TelegramLongPollingBot
                     {
                         Logger.getLogger(SonDakikaBot.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                }
+                
+                else if(messageText.equals("/gundem"))
+                {
+                     try
+                    {
+                        ArrayList<News> popularNews = GoogleGundemParser.getPopularNews(10);
+                        
+                        String sendText = "";
+                        for(News pn:popularNews)
+                            sendText += pn.toString() + "\n";
+                        
+                        SendMessage sm = new SendMessage()
+                                .setChatId(update.getMessage().getChatId())
+                                .setText(sendText);
+                        
+                        execute(sm);
+                    
+                    } catch (IOException ex)
+                    {
+                        Logger.getLogger(SonDakikaBot.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (TelegramApiException ex)
+                    {
+                        Logger.getLogger(SonDakikaBot.class.getName()).log(Level.SEVERE, null, ex);
+                    }                   
                 }
             }
         }

@@ -1,7 +1,7 @@
 
 import java.io.IOException;
 import java.util.ArrayList;
-import xmlParsers.MilliyetSonDakikaParser;
+import xmlParsers.GoogleGundemParser;
 import xmlParsers.News;
 
 /*
@@ -21,7 +21,7 @@ public class Test
      */
     public static void main(String[] args) throws IOException
     {
-        ArrayList<News> recentNews = MilliyetSonDakikaParser.getRecentNNews(10);
+        ArrayList<News> recentNews = GoogleGundemParser.getPopularNews(10);
 
         String sendText = "";
         for (News rn : recentNews)
