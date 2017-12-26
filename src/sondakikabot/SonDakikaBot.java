@@ -78,7 +78,7 @@ public class SonDakikaBot extends TelegramLongPollingBot
                 String messageText = message.getText();
                 String messageTextLowerText = messageText.toLowerCase();
                 
-                if(messageText.equals("/sondakika"))
+                if(messageText.startsWith("/sondakika"))
                 {
                     try
                     {
@@ -103,7 +103,7 @@ public class SonDakikaBot extends TelegramLongPollingBot
                     }
                 }
                 
-                else if(messageText.equals("/gundem"))
+                else if(messageText.startsWith("/gundem"))
                 {
                      try
                     {
