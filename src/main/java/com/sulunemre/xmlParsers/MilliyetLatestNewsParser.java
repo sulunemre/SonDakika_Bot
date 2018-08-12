@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xmlParsers;
+package com.sulunemre.xmlParsers;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -19,27 +19,26 @@ import org.jsoup.select.Elements;
  *
  * @author Emre
  */
-public class GoogleGundemParser
+public class MilliyetLatestNewsParser
 {
-    private final static String XML_LINK = "https://news.google.com/news/rss/?hl=tr&gl=TR&ned=tr_tr";
+    private final static String XML_LINK = "http://www.milliyet.com.tr/rss/rssNew/SonDakikaRss.xml";
    
-    public static ArrayList<News> getPopularNews(int n) throws MalformedURLException, IOException
+    public static ArrayList<News> getRecentNNews(int n) throws MalformedURLException, IOException
     {
-        ArrayList<News> popularNews = new ArrayList<>();
+        ArrayList<News> recentNNews = new ArrayList<>();
         
         Document doc = Jsoup.parse(new URL(XML_LINK).openStream(), "UTF-8", "", Parser.xmlParser());
         Elements newsItems = doc.getElementsByTag("item");
         for(int i=0; i<n; i++)
         {
             String title = newsItems.get(i).getElementsByTag("title").text();
-            String linkEncoded = newsItems.get(i).getElementsByTag("link").text();
+            String linkEncoded = newsItems.get(i).getElementsByTag("guid").text();
             String link = URLDecoder.decode(linkEncoded, "UTF-8");
             
             News newNews = new News(title, link); //LOL
-            //TODO: date kismi eklenecek 
-            popularNews.add(newNews);
+            recentNNews.add(newNews);
         }
         
-        return popularNews;
-    } 
+        return recentNNews;
+    }
 }

@@ -3,31 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sondakikabot;
+package com.sulunemre.telegramNewsBot;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.telegram.telegrambots.ApiContextInitializer;
-import org.telegram.telegrambots.TelegramBotsApi;
-import org.telegram.telegrambots.api.methods.send.SendMessage;
-import org.telegram.telegrambots.api.objects.Message;
-import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.exceptions.TelegramApiException;
-import xmlParsers.GoogleGundemParser;
-import xmlParsers.MilliyetSonDakikaParser;
-import xmlParsers.News;
+import org.telegram.telegrambots.meta.api.objects.Update;
+import com.sulunemre.xmlParsers.GoogleNewsParser;
+import com.sulunemre.xmlParsers.MilliyetLatestNewsParser;
+import com.sulunemre.xmlParsers.News;
+import java.io.IOException;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 /**
  *
  * @author Emre
  */
-public class SonDakikaBot extends TelegramLongPollingBot
+public class NewsBot extends TelegramLongPollingBot
 {
 
     /**
@@ -44,7 +44,7 @@ public class SonDakikaBot extends TelegramLongPollingBot
         // Register our bot
         try
         {
-            botsApi.registerBot(new SonDakikaBot());
+            botsApi.registerBot(new NewsBot());
         } catch (TelegramApiException e)
         {
             e.printStackTrace();
@@ -62,7 +62,7 @@ public class SonDakikaBot extends TelegramLongPollingBot
 
         } catch (FileNotFoundException ex)
         {
-            Logger.getLogger(SonDakikaBot.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NewsBot.class.getName()).log(Level.SEVERE, null, ex);
         }
         return fileIn.next();
     }
@@ -82,7 +82,7 @@ public class SonDakikaBot extends TelegramLongPollingBot
                 {
                     try
                     {
-                        ArrayList<News> recentNews = MilliyetSonDakikaParser.getRecentNNews(10);
+                        ArrayList<News> recentNews = MilliyetLatestNewsParser.getRecentNNews(10);
                         
                         String sendText = "";
                         for(News rn:recentNews)
@@ -94,12 +94,11 @@ public class SonDakikaBot extends TelegramLongPollingBot
                         
                         execute(sm);
                     
-                    } catch (IOException ex)
-                    {
-                        Logger.getLogger(SonDakikaBot.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (TelegramApiException ex)
                     {
-                        Logger.getLogger(SonDakikaBot.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(NewsBot.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(NewsBot.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 
@@ -107,7 +106,7 @@ public class SonDakikaBot extends TelegramLongPollingBot
                 {
                      try
                     {
-                        ArrayList<News> popularNews = GoogleGundemParser.getPopularNews(10);
+                        ArrayList<News> popularNews = GoogleNewsParser.getPopularNews(10);
                         
                         String sendText = "";
                         for(News pn:popularNews)
@@ -119,12 +118,11 @@ public class SonDakikaBot extends TelegramLongPollingBot
                         
                         execute(sm);
                     
-                    } catch (IOException ex)
-                    {
-                        Logger.getLogger(SonDakikaBot.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (TelegramApiException ex)
                     {
-                        Logger.getLogger(SonDakikaBot.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(NewsBot.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(NewsBot.class.getName()).log(Level.SEVERE, null, ex);
                     }                   
                 }
             }
