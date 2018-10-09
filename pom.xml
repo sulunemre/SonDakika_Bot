@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.sulunemre</groupId>
     <artifactId>telegram-news-bot</artifactId>
@@ -21,6 +21,19 @@
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>1.11.3</version>
-        </dependency>                
+        </dependency>
     </dependencies>
+<build>
+  <plugins>
+    <plugin>
+      <!-- Build an executable JAR -->
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>exec-maven-plugin</artifactId>
+      <version>1.6.0</version>
+      <configuration>
+            <mainClass>com.sulunemre.telegramNewsBot.NewsBot</mainClass>
+      </configuration>
+    </plugin>
+  </plugins>
+</build>
 </project>
